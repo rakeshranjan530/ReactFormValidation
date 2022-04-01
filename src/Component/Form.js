@@ -23,15 +23,15 @@ const Form = ({history}) => {
     const handleChange = (e, i) => {
         const { name, value } = e.target;
         let tempFormError = [...formErrors]
-        formErrors.map((e, k) => {
-            if (k === i && value) return e[name] = null;
-            return { ...e }
+        tempFormError?.map((f, k) => {
+            if (k === i && value) return f[name] = null;
+            return { ...f }
         })
         setFormErrors(tempFormError)
         let tempValueArr = [...formValues]
 
         tempValueArr.map((o, j) => {
-            if (j === i) return o[name] = value;
+            if (j === i) return o[name] = value; //o{}
         })
         setFormValues(tempValueArr)
     }
@@ -44,10 +44,11 @@ const Form = ({history}) => {
         })
         setFormErrors(arr);
         let tempFormValues = JSON.parse(JSON.stringify(formValues))
-        tempFormValues.map(e=> e['isUpdateBtn'] = false)
+        tempFormValues.map(value=> value['isUpdateBtn'] = false)
+
         setResultValue(tempFormValues);
-        let arrData = arr.every((e) => Object.values(e).length > 0);
-        let hello = [];
+        let arrData = arr.every((value) => Object.values(value).length > 0);
+        let tempValue = [];
         if (!arrData) {
             formValues.forEach(r => {
                 r['name'] = ''
@@ -55,10 +56,10 @@ const Form = ({history}) => {
                 r['password'] = ''
                 r['confirmPassword'] = ''
                 r['mobile'] = ''
-                hello.push(r);
+                tempValue.push(r);
             })
 
-            setFormValues(hello)
+            setFormValues(tempValue)
             history.push({pathname:"/table",params:{resultValue:tempFormValues}})
         }
     }
